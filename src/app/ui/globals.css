@@ -1,0 +1,27 @@
+@tailwand base;
+@tailwand components;
+@tailwind utilities;
+
+:root {
+  --background: linear-gradient(to right, #757474, #1a1a1a);
+  color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: linear-gradient(to right, #757474, #1a1a1a);
+    color: white;
+  }
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+
