@@ -1,3 +1,4 @@
+/* This file is for changing the global styles of the app */
 @tailwand base;
 @tailwand components;
 @tailwind utilities;

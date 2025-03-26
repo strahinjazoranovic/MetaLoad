@@ -1,4 +1,5 @@
 "use client";
+// This is the page for loadouts
 import React, { useEffect, useState } from "react";
 
 export default function Loads() {
@@ -10,10 +11,11 @@ export default function Loads() {
 
   interface Gun {
     attachments: Attachment[];
-    id: string; // Adjust the type of 'id' if it's not a string
-    name: string; // Add other properties of the Gun object if needed
+    id: string;
+    name: string; 
   }
 
+  // The state of the component
   const [guns, setGuns] = useState<Gun[]>([]);
   useEffect(() => {
     const fetchData = async () => {

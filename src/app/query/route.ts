@@ -1,5 +1,8 @@
+// This is the API route that will be called to fetch data from the database
 import { NextResponse, NextRequest } from 'next/server'
 import mysql, { RowDataPacket } from 'mysql2/promise';
+
+// This is where the database connection parameters are stored
 import { get } from 'http';
 let connectionParams = {
   host: process.env.DB_HOST,
@@ -22,18 +25,15 @@ export async function GET(request: Request) {
     // 4. exec the query and retrieve the results
     const [results] = await connection.execute<RowDataPacket[]>(get_exp_query, values)
     for (const result of results) {
-
-      //console.log(result);
       get_exp_query = 'select a.* from guns g, guns_attachments ga, attachments a where g.id = ga.gun_id and g.id = ? and ga.attachment_id = a.id';
       values = [result.id];
       const [results_attachments] = await connection.execute<RowDataPacket[]>(get_exp_query, values);
-      // console.log(results_attachments);
       result.attachments = results_attachments;
       console.log(result);
     }
-    // 5. close the connection when done
     console.log(results);
 
+    // 5. close the connection when done
     connection.end()
     // return the results as a JSON API response
     return NextResponse.json(results)

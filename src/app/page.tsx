@@ -1,3 +1,4 @@
+// This is the home page
 import Link from "next/link";
 import "./ui/globals.css";
 

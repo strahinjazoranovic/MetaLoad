@@ -1,8 +1,9 @@
+// Layout for the app for every page
 import Navbar from './ui/navbar';
 
 export const metadata = {
   title: 'MetaLoad',
-  description: 'Free Warzone Loadouts',
+  description: 'Warzone Loadouts',
 }
 
 export default function RootLayout({
