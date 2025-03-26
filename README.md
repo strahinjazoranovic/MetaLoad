@@ -6,7 +6,7 @@ Het kan zo zijn dat je 2 keer de map moet openen om erin te komen vanwege het ex
 
 NPM = Node Package Manager, Dit heb je nodig om mijn projecten te runnen
 
-Kopieer de regels hieronder in volgorde en voor deze stuk voor stukuit in je terminal, Als je de github repo op een andere plaats hebt extract zorg er dan voor dat je inplaats van cd Downloads uitvoert, cd (map van installatie)
+Kopieer de regels hieronder in volgorde en voor deze stuk voor stuk uit in je terminal, Als je de github repo op een andere plaats hebt extract zorg er dan voor dat je inplaats van cd Downloads uitvoert, cd (map van installatie)
 
 ```bash
 cd Downloads
