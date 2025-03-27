@@ -19,7 +19,7 @@ export async function GET(request: Request) {
     const connection = await mysql.createConnection(connectionParams)
     // 3. create a query to fetch data
     let get_exp_query = ''
-    get_exp_query = 'SELECT id, name FROM guns'
+    get_exp_query = 'SELECT id, name, game FROM guns'
     // we can use this array to pass parameters to the SQL query
     let values: any[] = []
     // 4. exec the query and retrieve the results
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       values = [result.id];
       const [results_attachments] = await connection.execute<RowDataPacket[]>(get_exp_query, values);
       result.attachments = results_attachments;
-      console.log(result);
+      // console.log(result);
     }
     console.log(results);
 

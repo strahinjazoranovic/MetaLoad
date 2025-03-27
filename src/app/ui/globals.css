@@ -2,27 +2,31 @@
 @tailwand base;
 @tailwand components;
 @tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+
 
 :root {
-  --background: linear-gradient(to right, #757474, #1a1a1a);
-  color: white;
+  --background: linear-gradient(to right, #353535, #1a1a1a);
+  --foreground: white; /* Define the foreground color properly */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: linear-gradient(to right, #757474, #1a1a1a);
-    color: white;
+    --background: linear-gradient(to right, #353535, #1a1a1a);
+    --foreground: white;
   }
 }
 
 html, body {
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  margin: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
 }
+
 
 
