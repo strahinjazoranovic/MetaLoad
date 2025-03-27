@@ -36,12 +36,8 @@ export default function Loads() {
     fetchData();
   }, []);
 
-  function GunList() {
-    const getTextColor = (game: string) => {
-      if (game === "Black Ops 6") return "text-orange-500";
-      if (game === "Modern Warfare 3") return "text-red-500";
-      return "text-gray-200"; // Default color
-    };
+  if (guns.length === 0){
+    return <h1 className="pt-25 text-center font-4xl">Loading guns...</h1>
   }
 
   return (
