@@ -1,8 +1,8 @@
 ## 1. MetaLoad Installeren
 
-1. Ga naar de GitHub repo en installeer https://github.com/strahinjazoranovic/MetaLoad,
+1. Ik werk in 2 branches. test is atijd op laaste versie maar kan incompleet zijn en bugs hebben, main is altijd compleet en wordt later pas geüpdate als alles goed getest is
 
-2. De test branche is altijd op de laatste versie, main wordt later pas geüpdate als alles goed getest is
+2. Ga naar de GitHub repo en installeer https://github.com/strahinjazoranovic/MetaLoad, Klik op Code en klik dan op Download ZIP
 
 3. Vervolgens ga je naar je downloads en rechterklik je op het bestand die je hebt gedownload. Je kiest dan vervolgens "Extract All.." . Als het goed is heb je nu een normale bestand dat niet gezipt is.
 
@@ -19,7 +19,7 @@
 ```bash
 Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 ```
-3. En dan klik je op database.sql, hierdoor krijg je alle gegevens en tables die al staan in de database.
+4. En dan klik je op database.sql, scroll vervolgens naar beneden en klik op Import. Als je dit hebt uitgevoerd krijg je alle gegevens en tables die al staan in de database.
 
 ## 3. Website runnen
 
