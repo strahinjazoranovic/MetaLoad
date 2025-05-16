@@ -8,9 +8,11 @@
 
 ## 2. Database Installatie  
 
-1. Eerst moet je nog in PHPmyAdmin een nieuwe database aanmaken
+1. [Download hier eerst XAMPP](https://www.apachefriends.org/download.html)****
+
+2. Open XAMPP Control panel, Start Apache en MySQL. KLik op Admin bij MySQL en dit brengt je naar phpMyAdmin
    
-2. Vervolgens ga je naar importeren. Je klikt op "choose file" en kopieer de lijn hieronder en zet deze in je path
+3. Vervolgens ga je naar importeren. Je klikt op "choose file" en kopieer de lijn hieronder en zet deze in je path
    
 ```bash
 Desktop\MetaLoad-main\MetaLoad-main\src\app\query
