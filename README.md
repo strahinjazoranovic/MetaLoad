@@ -2,9 +2,11 @@
 
 1. Ga naar de GitHub repo en installeer https://github.com/strahinjazoranovic/MetaLoad,
 
-2. Vervolgens ga je naar je downloads en rechterklik je op het bestand die je hebt gedownload. Je kiest dan vervolgens "Extract All.." . Als het goed is heb je nu een normale bestand dat niet gezipt is.
+2. De test branche is altijd op de laatste versie, main wordt later pas geüpdate als alles goed getest is
 
-3. Dit niet gezipte bestand moet je vervolgens plaatsen in je desktop folder zodat je het dan later in je terminal kunt runnen
+3. Vervolgens ga je naar je downloads en rechterklik je op het bestand die je hebt gedownload. Je kiest dan vervolgens "Extract All.." . Als het goed is heb je nu een normale bestand dat niet gezipt is.
+
+4. Dit niet gezipte bestand moet je vervolgens plaatsen in je desktop folder zodat je het dan later in je terminal kunt runnen
 
 ## 2. Database Installatie  
 
@@ -15,7 +17,7 @@
 3. Vervolgens ga je naar importeren. Je klikt op "choose file" en kopieer de lijn hieronder en zet deze in je path
    
 ```bash
-Desktop\MetaLoad-main\MetaLoad-main\src\app\query
+Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 ```
 3. En dan klik je op database.sql, hierdoor krijg je alle gegevens en tables die al staan in de database.
 
@@ -29,8 +31,8 @@ Desktop\MetaLoad-main\MetaLoad-main\src\app\query
 
 ```bash
 cd Desktop
-cd MetaLoad-main 
-cd Metaload-main 
+cd MetaLoad-test
+cd Metaload-test
 npm install
 npm run dev
 ```
