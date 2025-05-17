@@ -1,4 +1,4 @@
-## 1. MetaLoad Installeren
+## 1. MetaLoad lokaal installeren
 
 1. Ik werk in 2 branches. test is atijd op laaste versie maar kan incompleet zijn en bugs hebben, main is altijd compleet en wordt later pas geüpdate als alles goed getest is
 
