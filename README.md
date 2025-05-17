@@ -1,6 +1,6 @@
 ## 1. MetaLoad lokaal installeren
 
-1. Ik werk in 2 branches. test is atijd op laaste versie maar kan incompleet zijn en bugs hebben, main is altijd compleet en wordt later pas geüpdate als alles goed getest is
+1. Ik werk in 2 branches. test is atijd op laaste versie maar kan incompleet zijn en bugs hebben, main is altijd compleet en wordt later pas geüpdate als alles goed getest is. Als je de test versie hebt geinstalleerd zorg er dan wel voor dat je inplaats van MetaLoad-main, MetaLoad-test doet want het is een andere branch naam.
 
 2. Ga naar de GitHub repo en installeer https://github.com/strahinjazoranovic/MetaLoad, Klik op Code en klik dan op Download ZIP
 
