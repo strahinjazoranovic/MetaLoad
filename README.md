@@ -27,7 +27,7 @@ Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 
 2. NPM = Node Package Manager, Dit heb je nodig om mijn project op te starten. [Download hier Node.js en NPM](https://nodejs.org)
 
-3. 
+3. In de .env moet jij je eigen database_port en database_username invoeren. als je dit niet doet dan werkt de database niet.
 
 4. Kopieer de regels hieronder in volgorde en voor deze stuk voor stuk uit in je terminal, Als je de gedownloade files op een andere plaats hebt extract zorg er dan voor dat je inplaats van cd Desktop uitvoert, cd (map van installatie)
 
