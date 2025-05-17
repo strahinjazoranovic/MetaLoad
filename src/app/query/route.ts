@@ -8,7 +8,6 @@ let connectionParams = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : undefined,
   user:  process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 }
 
@@ -16,10 +15,11 @@ let connectionParams = {
 export async function GET(request: Request) {
   try {
     // 2. connect to database
+    console.log(connectionParams)
     const connection = await mysql.createConnection(connectionParams)
     // 3. create a query to fetch data
     let get_exp_query = ''
-    get_exp_query = 'SELECT id, name, game, user FROM guns'
+    get_exp_query = 'SELECT id, name, game, user, photos FROM guns'
     // we can use this array to pass parameters to the SQL query
     let values: any[] = []
     // 4. exec the query and retrieve the results
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
     console.log(results);
 
     // 5. close the connection when done
-    connection.end()
+    connection. end()
     // return the results as a JSON API response
     return NextResponse.json(results)
   } catch (err) {

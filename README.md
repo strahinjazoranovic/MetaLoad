@@ -15,7 +15,7 @@
 2. Open XAMPP Control panel, Start Apache en MySQL. KLik op Admin bij MySQL en dit brengt je naar phpMyAdmin
    
 3. Vervolgens ga je naar importeren. Je klikt op "choose file" en kopieer de lijn hieronder en zet deze in je path
-   
+
 ```bash
 Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 ```
@@ -27,7 +27,9 @@ Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 
 2. NPM = Node Package Manager, Dit heb je nodig om mijn project op te starten. [Download hier Node.js en NPM](https://nodejs.org)
 
-3. Kopieer de regels hieronder in volgorde en voor deze stuk voor stuk uit in je terminal, Als je de gedownloade files op een andere plaats hebt extract zorg er dan voor dat je inplaats van cd Desktop uitvoert, cd (map van installatie)
+3. 
+
+4. Kopieer de regels hieronder in volgorde en voor deze stuk voor stuk uit in je terminal, Als je de gedownloade files op een andere plaats hebt extract zorg er dan voor dat je inplaats van cd Desktop uitvoert, cd (map van installatie)
 
 ```bash
 cd Desktop
@@ -36,6 +38,5 @@ cd Metaload-test
 npm install
 npm run dev
 ```
-
-4. Als je alles goed hebt uitgevoerd in de terminal, zie je als het goed is deze link http://localhost:3000
+5. Als je alles goed hebt uitgevoerd in de terminal, zie je als het goed is deze link http://localhost:3000
 als je dan klikt terwijl je CTRL ingedrukt houd op je toetsenbord kan je het project openen met je browser
