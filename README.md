@@ -17,7 +17,7 @@
 3. Vervolgens ga je naar importeren. Je klikt op "choose file" en kopieer de lijn hieronder en zet deze in je path
 
 ```bash
-Desktop\MetaLoad-test\MetaLoad-main\src\app\query
+Desktop\MetaLoad-test\MetaLoad-test\src\app\query
 ```
 4. En dan klik je op database.sql, scroll vervolgens naar beneden en klik op Import. Als je dit hebt uitgevoerd krijg je alle gegevens en tables die al staan in de database.
 
@@ -33,8 +33,8 @@ Desktop\MetaLoad-test\MetaLoad-main\src\app\query
 
 ```bash
 cd Desktop
-cd MetaLoad-main
-cd Metaload-main
+cd MetaLoad-test
+cd Metaload-test
 npm install
 npm run dev
 ```
