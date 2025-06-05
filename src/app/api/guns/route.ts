@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { Pool } from 'pg';
+import { NextResponse } from "next/server";
+import { Pool } from "pg";
 
 // PostgreSQL connection pool
 const pool = new Pool({
@@ -25,13 +25,15 @@ export async function GET(request: Request) {
         JOIN attachments a ON ga.attachment_id = a.id
         WHERE g.id = $1
       `;
-      const { rows: attachments } = await client.query(getAttachmentsQuery, [gun.id]);
+      const { rows: attachments } = await client.query(getAttachmentsQuery, [
+        gun.id,
+      ]);
       gun.attachments = attachments;
     }
 
     return NextResponse.json(guns);
   } catch (err) {
-    console.error('ERROR: API - ', (err as Error).message);
+    console.error("ERROR: API - ", (err as Error).message);
     return NextResponse.json(
       { error: (err as Error).message, returnedStatus: 200 },
       { status: 200 }

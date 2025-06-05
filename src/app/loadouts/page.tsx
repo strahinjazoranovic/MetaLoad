@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "../ui/globals.css";
 
-export default function Loads() {
+export default function Loadouts() {
   interface Attachment {
     name: string;
     type: string;
@@ -26,7 +26,7 @@ export default function Loads() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch("/query");
+        const data = await fetch("/api/guns");
         const response = await data.json();
         setGuns(response);
         console.log(response);
@@ -65,7 +65,6 @@ export default function Loads() {
           <h1 className="text-center text-4xl text-red-600 font-extrabold">
             WARZONE LOADOUTS
           </h1>
-
           {guns.map((gun) => (
             <div
               key={gun.id}
@@ -109,15 +108,16 @@ export default function Loads() {
                     <div className="pl-2 font-xl">{attachment.name}</div>
                   </div>
                 ))}
-                <div className="text-base text-center text-white mt-2">
-                  Class made by: {gun.user}
+                <div className="text-white m-3 flex justify-between items-center px-8">
+                  <span>
+                    Class made by: <span className="font-bold">{gun.user}</span>
+                  </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
       <footer className="text-center mt-100 pb-20 text-white">
         ©Strahinja Zoranovic 2025 | All rights reserved
       </footer>

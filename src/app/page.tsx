@@ -1,16 +1,6 @@
-// This is the home page
-import Link from "next/link";
-import "./ui/globals.css";
-
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <main>
-      <img
-        src="/images/season2.jpg"
-        alt="Season 2"
-        className="blur-[3px]"
-      ></img>
-    </main>
-  );
+  redirect("/loads");
+  return null;
 }
