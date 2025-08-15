@@ -2,6 +2,63 @@
 import React, { useState } from "react";
 import "../ui/globals.css";
 
+// Example options for each attachment type
+const ATTACHMENT_OPTIONS = {
+  optic: ["none"],
+  muzzle: [
+    "Monolithic Suppressor",
+
+    "Compensator",
+
+    "Flash Hider",
+
+    "Recoil Springs",
+
+    "Suppressor",
+  ],
+  barrel: ["none"],
+  underbarrel: ["none"],
+  magazine: ["none"],
+  reargrip: ["none"],
+  stock: ["none"],
+  laser: ["none"],
+  firemods: ["none"],
+};
+
+const GUN_OPTIONS = [
+  "--- Assault Rifles ---",
+  "ABR A1",
+  "FFAR 1",
+  "Kilo 141",
+  "CR-56 AMAX",
+  "Cypher 091",
+  "Krig C",
+  "GPR 91",
+  "Model L",
+  "Goblin Mk2",
+  "AS VAL",
+  "AMES 85",
+  "XM4",
+  "AK-74",
+  "--- Submachine Guns ---",
+  "LC10",
+  "Ladra",
+  "PPSh-41",
+  "Saug",
+  "KSV",
+  "PP-919",
+  "Kompakt 92",
+  "Jackal PDW",
+  "Tanto .22",
+  "C9",
+  "--- Sniper Rifles ---",
+  "HDR",
+  "AMR Mod 4",
+  "LW3A1 Frostline",
+  "LR 7.62",
+  "SVD",
+];
+
 export default function CreateLoadouts() {
   const [form, setForm] = useState({
     name: "",
@@ -86,15 +143,21 @@ export default function CreateLoadouts() {
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3">
-              <input
-                placeholder="Gun Name"
+              <select
                 value={form.name}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, name: e.target.value }))
                 }
                 className="p-2 rounded w-full text-black border border-white-500"
                 required
-              />
+              >
+                <option value="">Select Gun</option>
+                {GUN_OPTIONS.map((gun) => (
+                  <option key={gun} value={gun}>
+                    {gun}
+                  </option>
+                ))}
+              </select>
 
               <select
                 value={form.game}
@@ -142,8 +205,7 @@ export default function CreateLoadouts() {
                   </h4>
                   {(form[type] as { name: string }[]).map((att, idx) => (
                     <div key={idx} className="flex gap-2 mb-2">
-                      <input
-                        placeholder={`${type} Name`}
+                      <select
                         value={att.name}
                         onChange={(e) =>
                           setForm((prev) => {
@@ -159,7 +221,14 @@ export default function CreateLoadouts() {
                         }
                         className="p-2 rounded text-black flex-1"
                         required
-                      />
+                      >
+                        <option value="">Select {type}</option>
+                        {ATTACHMENT_OPTIONS[type].map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   ))}
                 </div>
