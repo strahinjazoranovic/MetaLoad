@@ -9,8 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
     "mysql2": "^3.14.0",
-    "next": "15.2.8",
+    "next": "^15.5.14",
     "pg": "^8.16.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -22,6 +23,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "^5.0.9",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

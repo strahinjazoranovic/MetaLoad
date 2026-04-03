@@ -1,247 +1,237 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import Navbar from "../ui/navbar";
 import "../ui/globals.css";
 
-// Example options for each attachment type
-const ATTACHMENT_OPTIONS = {
-  optic: ["none"],
-  muzzle: [
-    "Monolithic Suppressor",
 
-    "Compensator",
-
-    "Flash Hider",
-
-    "Recoil Springs",
-
-    "Suppressor",
-  ],
-  barrel: ["none"],
-  underbarrel: ["none"],
-  magazine: ["none"],
-  reargrip: ["none"],
-  stock: ["none"],
-  laser: ["none"],
-  firemods: ["none"],
-};
-
-const GUN_OPTIONS = [
-  "--- Assault Rifles ---",
-  "ABR A1",
-  "FFAR 1",
-  "Kilo 141",
-  "CR-56 AMAX",
-  "Cypher 091",
-  "Krig C",
-  "GPR 91",
-  "Model L",
-  "Goblin Mk2",
-  "AS VAL",
-  "AMES 85",
-  "XM4",
-  "AK-74",
-  "--- Submachine Guns ---",
-  "LC10",
-  "Ladra",
-  "PPSh-41",
-  "Saug",
-  "KSV",
-  "PP-919",
-  "Kompakt 92",
-  "Jackal PDW",
-  "Tanto .22",
-  "C9",
-  "--- Sniper Rifles ---",
-  "HDR",
-  "AMR Mod 4",
-  "LW3A1 Frostline",
-  "LR 7.62",
-  "SVD",
-];
+const ATTACHMENT_TYPES = [
+  "Optic",
+  "Muzzle",
+  "Barrel",
+  "Underbarrel",
+  "Magazine",
+  "Reargrip",
+  // "Stock",
+  // "Laser",
+  // "Firemods",
+] as const;
 
 export default function CreateLoadouts() {
   const [form, setForm] = useState({
     name: "",
     game: "",
     user: "",
-    optic: [{ name: "" }],
-    muzzle: [{ name: "" }],
-    barrel: [{ name: "" }],
-    underbarrel: [{ name: "" }],
-    magazine: [{ name: "" }],
-    reargrip: [{ name: "" }],
-    stock: [{ name: "" }],
-    laser: [{ name: "" }],
-    firemods: [{ name: "" }],
+    Optic: [{ name: "" }],
+    Muzzle: [{ name: "" }],
+    Barrel: [{ name: "" }],
+    Underbarrel: [{ name: "" }],
+    Magazine: [{ name: "" }],
+    Reargrip: [{ name: "" }],
+    // Stock: [{ name: "" }],
+    // Laser: [{ name: "" }],
+    // Firemods: [{ name: "" }],
   });
+
+  const [guns, setGuns] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<Record<string, string[]>>({});
   const [message, setMessage] = useState("");
 
-  function handleAttachmentChange(idx: number, field: string, value: string) {
-    setForm((prev) => {
-      const atts = [...prev.optic];
-      atts[idx] = { ...atts[idx], [field]: value };
-      return { ...prev, attachments: atts };
-    });
-  }
+  // Input style for all inputs
+  const inputStyle =
+    "p-2 rounded w-full text-black bg-white border-2 border-gray-300 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-400 transition";
 
-  function addAttachment() {
-    setForm((prev) => ({
-      ...prev,
-      optic: [...prev.optic, { name: "" }],
-      muzzle: [...prev.muzzle, { name: "" }],
-      barrel: [...prev.barrel, { name: "" }],
-      underbarrel: [...prev.underbarrel, { name: "" }],
-      magazine: [...prev.magazine, { name: "" }],
-      reargrip: [...prev.reargrip, { name: "" }],
-      stock: [...prev.stock, { name: "" }],
-      laser: [...prev.laser, { name: "" }],
-      firemods: [...prev.firemods, { name: "" }],
-    }));
-  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Fetch guns
+        const gunRes = await fetch("/api/guns");
+        const gunData = await gunRes.json();
+        setGuns(gunData);
 
+        const attachmentData: Record<string, string[]> = {};
+
+        // Fetch attachments per type
+        for (const type of ATTACHMENT_TYPES) {
+          const res = await fetch(`/api/attachments?type=${type}`);
+          const data = await res.json();
+          attachmentData[type] = data;
+        }
+
+        setAttachments(attachmentData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  // Handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage("");
-    const res = await fetch("/api/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    if (res.ok) {
-      setMessage("Loadout created!");
-      setForm({
-        name: "",
-        game: "",
-        user: "",
-        optic: [{ name: "" }],
-        muzzle: [{ name: "" }],
-        barrel: [{ name: "" }],
-        underbarrel: [{ name: "" }],
-        magazine: [{ name: "" }],
-        reargrip: [{ name: "" }],
-        stock: [{ name: "" }],
-        laser: [{ name: "" }],
-        firemods: [{ name: "" }],
+
+    // Collect attachments in a type way
+    const formattedAttachments: { name: string; type: string }[] = [];
+
+    // Loop through each attachment type and collect non-empty attachments
+    ATTACHMENT_TYPES.forEach((type) => {
+      const attArray = form[type] as { name: string }[];
+      attArray.forEach((att) => {
+        if (att.name.trim() !== "") {
+          formattedAttachments.push({ name: att.name, type });
+        }
       });
-    } else {
+    });
+
+    // Prepare payload with name, game, user and formatted attachments
+    const payload = {
+      name: form.name,
+      game: form.game,
+      user: form.user,
+      attachments: formattedAttachments,
+    };
+
+    // Try fetching API to create loadout
+    try {
+      const res = await fetch("/api/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      // If the response is ok, show success message and reset form otherwise show an error message
+      if (res.ok) {
+        setMessage("Loadout created!");
+        // Reset form after successful submission
+        setForm({
+          name: "",
+          game: "",
+          user: "",
+          Optic: [{ name: "" }],
+          Muzzle: [{ name: "" }],
+          Barrel: [{ name: "" }],
+          Underbarrel: [{ name: "" }],
+          Magazine: [{ name: "" }],
+          Reargrip: [{ name: "" }],
+        });
+      } else {
+        const errData = await res.json();
+        setMessage("Error creating loadout: " + (errData.error || ""));
+      }
+    } catch (err) {
+      console.error(err);
       setMessage("Error creating loadout.");
     }
   }
 
   return (
     <main>
-      <div className="pt-25 flex justify-center">
-        <div
-          className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg p-6 ml-5 mr-5 mb-8 mt-8 rounded-lg w-2/4"
-          style={{
-            boxShadow:
-              "10px 10px 20px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.1)",
-          }}
-        >
-          <h2 className="text-3xl mb-4 text-white font-extrabold text-center">
-            Create Loadout
-          </h2>
+      <Navbar />
+      <div className="pt-25 flex justify-center flex-col items-center">
+        <h2 className="text-4xl mb-2 text-red-600 font-extrabold text-center">
+          Create an loadout
+        </h2>
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg p-6 mt-4 rounded-lg w-2/4">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3">
+              {/* Gun select */}
               <select
                 value={form.name}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, name: e.target.value }))
                 }
-                className="p-2 rounded w-full text-black border border-white-500"
+                className={inputStyle}
                 required
               >
-                <option value="">Select Gun</option>
-                {GUN_OPTIONS.map((gun) => (
-                  <option key={gun} value={gun}>
-                    {gun}
+                <option value="">Select an gun</option>
+                {guns.map((gun: any) => (
+                  <option key={gun.id} value={gun.name}>
+                    {gun.name}
                   </option>
                 ))}
               </select>
 
+              {/* Game */}
               <select
                 value={form.game}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, game: e.target.value }))
                 }
-                className="p-2 rounded w-full text-black border border-white-500"
+                className={inputStyle}
                 required
               >
-                <option value="">Select Game</option>
+                <option value="">Select an game</option>
+                <option value="Black Ops 7">Black Ops 7</option>
                 <option value="Black Ops 6">Black Ops 6</option>
                 <option value="Modern Warfare 3">Modern Warfare 3</option>
                 <option value="Modern Warfare 2">Modern Warfare 2</option>
               </select>
+
+              {/* User */}
               <input
-                placeholder="User"
+                placeholder="Username"
                 value={form.user}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, user: e.target.value }))
                 }
-                className="p-2 rounded w-full text-black border border-white-500"
+                className={inputStyle}
                 required
               />
             </div>
+
+            {/* Attachments */}
             <div className="mt-6">
-              <h3 className="text-2xl font-bold text-white mb-2 text-center">
+              <h3 className="text-2xl font-bold text-red-500 mb-4 text-left">
                 Attachments
               </h3>
-              {(
-                [
-                  "optic",
-                  "muzzle",
-                  "barrel",
-                  "underbarrel",
-                  "magazine",
-                  "reargrip",
-                  "stock",
-                  "laser",
-                  "firemods",
-                ] as const
-              ).map((type) => (
-                <div key={type}>
-                  <h4 className="text-white font-semibold capitalize">
+
+              {ATTACHMENT_TYPES.map((type) => (
+                <div key={type} className="mb-4">
+                  <h4 className="text-white font-semibold capitalize mb-1">
                     {type}
                   </h4>
+
                   {(form[type] as { name: string }[]).map((att, idx) => (
-                    <div key={idx} className="flex gap-2 mb-2">
-                      <select
-                        value={att.name}
-                        onChange={(e) =>
-                          setForm((prev) => {
-                            const updated = [
-                              ...(prev[type] as { name: string }[]),
-                            ];
-                            updated[idx] = {
-                              ...updated[idx],
-                              name: e.target.value,
-                            };
-                            return { ...prev, [type]: updated };
-                          })
-                        }
-                        className="p-2 rounded text-black flex-1"
-                        required
-                      >
-                        <option value="">Select {type}</option>
-                        {ATTACHMENT_OPTIONS[type].map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <select
+                      key={idx}
+                      value={att.name}
+                      onChange={(e) =>
+                        setForm((prev) => {
+                          const updated = [
+                            ...(prev[type] as { name: string }[]),
+                          ];
+                          updated[idx] = {
+                            ...updated[idx],
+                            name: e.target.value,
+                          };
+                          return { ...prev, [type]: updated };
+                        })
+                      }
+                      className={`${inputStyle} mb-2`}
+                      required
+                    >
+                      <option value="">Select {type}</option>
+                      {attachments[type]?.map((option: any) => (
+                        <option key={option.id} value={option.name}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
                   ))}
                 </div>
               ))}
             </div>
-            <button
-              type="submit"
-              className="btn m-2 p-2 bg-red-500  text-white rounded-xl w-full mt-4"
-            >
+
+            <Button variant="default" type="submit" className="w-full">
               Submit Loadout
-            </button>
+            </Button>
+
             {message && (
-              <div className="mt-2 text-white text-center">{message}</div>
+              <div className="mt-3 text-white text-center font-medium">
+                {message}
+              </div>
             )}
           </form>
         </div>

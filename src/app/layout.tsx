@@ -1,22 +1,23 @@
-// Layout for the app for every page
-import Navbar from './ui/navbar';
+import { Plus_Jakarta_Sans } from "next/font/google";
 
 export const metadata = {
-  title: 'MetaLoad',
-  description: 'Warzone Loadouts',
-}
+  title: "MetaLoad",
+  description: "Call Of Duty Warzone Loadouts",
+};
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="text-white">
-        <Navbar />
-        {children}
-      </body>
+      <body className={plusJakartaSans.className}>{children}</body>
     </html>
-  )
+  );
 }
