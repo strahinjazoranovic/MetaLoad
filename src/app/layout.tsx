@@ -1,4 +1,5 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "MetaLoad",
@@ -17,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={plusJakartaSans.className}>{children}</body>
+      <body className={plusJakartaSans.className}>
+        {children}
+        <Toaster position="top-right" richColors />
+      </body>
     </html>
   );
 }

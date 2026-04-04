@@ -15,7 +15,7 @@ export default function Loadouts() {
     id: string;
     name: string;
     game: string;
-    user: string;
+    username: string;
     photos: string;
   }
 
@@ -28,7 +28,7 @@ export default function Loadouts() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetch("/api/guns");
+        const data = await fetch("/api/fetch/guns");
         const response = await data.json();
         setGuns(response);
       } catch (error) {
@@ -56,11 +56,14 @@ export default function Loadouts() {
   return (
     <main>
       <Navbar />
-      <div className="pt-25 flex justify-center">
+      <div className="pt-25 pb-25 flex justify-center">
         <div>
           <h1 className="text-center text-4xl text-red-600 font-extrabold">
             Loadouts
           </h1>
+          <p className="text-center text-xl mt-4 text-white font-extrabold">
+            Click on the gun to see the attachments!
+          </p>
 
           {/* Loading skeletons */}
           {loading &&
@@ -111,6 +114,7 @@ export default function Loadouts() {
 
                   <img
                     src={`/images/${gun.photos}`}
+                    draggable={false}
                     alt={gun.name}
                     className="w-3/7 h-auto rounded-lg"
                   />
@@ -135,7 +139,7 @@ export default function Loadouts() {
                   <div className="text-white m-3 flex justify-center items-center px-8">
                     <span>
                       Class made by:{" "}
-                      <span className="font-bold">{gun.user}</span>
+                      <span className="font-bold">{gun.username}</span>
                     </span>
                   </div>
                 </div>

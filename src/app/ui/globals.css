@@ -2,9 +2,8 @@
 @tailwand base;
 @tailwand components;
 @tailwind utilities;
-@import "tailwindcss";
 @plugin "daisyui";
-
+@import "tailwindcss";
 
 :root {
   --background: linear-gradient(to right, #353535, #1a1a1a);
@@ -27,6 +26,3 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
-
-
-

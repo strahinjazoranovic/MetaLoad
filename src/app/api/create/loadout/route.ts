@@ -12,12 +12,12 @@ const pool = new Pool({
 export async function POST(request: Request) {
   const client = await pool.connect();
   try {
-    const { name, game, user, attachments } = await request.json();
+    const { name, game, username, attachments } = await request.json();
 
     // Insert gun
     const gunResult = await client.query(
-      'INSERT INTO guns (name, game, "user") VALUES ($1, $2, $3) RETURNING id',
-      [name, game, user]
+      'INSERT INTO guns (name, game, "username") VALUES ($1, $2, $3) RETURNING id',
+      [name, game, username]
     );
     const gunId = gunResult.rows[0].id;
 

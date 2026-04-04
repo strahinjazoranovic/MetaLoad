@@ -14,16 +14,22 @@ export async function GET(request: Request) {
   const client = await pool.connect();
 
   try {
-    const getGunsQuery = 'SELECT id, name, game, "user", photos FROM guns';
+    // Fetch guns that have at least 1 attachment to them
+    const getGunsQuery = `
+      SELECT DISTINCT g.id, g.name, g.game, g."username", g.photos
+      FROM guns g
+      JOIN guns_attachments ga ON g.id = ga.gun_id
+      JOIN attachments a ON ga.attachment_id = a.id
+    `;
     const { rows: guns } = await client.query(getGunsQuery);
 
+    // Fetch attachments for each gun
     for (const gun of guns) {
       const getAttachmentsQuery = `
         SELECT a.*
-        FROM guns g
-        JOIN guns_attachments ga ON g.id = ga.gun_id
-        JOIN attachments a ON ga.attachment_id = a.id
-        WHERE g.id = $1
+        FROM attachments a
+        JOIN guns_attachments ga ON a.id = ga.attachment_id
+        WHERE ga.gun_id = $1
       `;
       const { rows: attachments } = await client.query(getAttachmentsQuery, [
         gun.id,
@@ -35,10 +41,10 @@ export async function GET(request: Request) {
   } catch (err) {
     console.error("ERROR: API - ", (err as Error).message);
     return NextResponse.json(
-      { error: (err as Error).message, returnedStatus: 200 },
-      { status: 200 }
+      { error: (err as Error).message },
+      { status: 500 },
     );
   } finally {
-    client.release(); // Always release the client back to the pool
+    client.release();
   }
 }

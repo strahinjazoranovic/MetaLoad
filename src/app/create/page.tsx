@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Navbar from "../ui/navbar";
+import { toast } from "sonner";
 import "../ui/globals.css";
-
 
 const ATTACHMENT_TYPES = [
   "Optic",
@@ -12,30 +12,33 @@ const ATTACHMENT_TYPES = [
   "Underbarrel",
   "Magazine",
   "Reargrip",
-  // "Stock",
-  // "Laser",
-  // "Firemods",
+  "Stock",
+  "Laser",
 ] as const;
+
+interface Gun {
+  id: string;
+  name: string;
+  game: string;
+}
 
 export default function CreateLoadouts() {
   const [form, setForm] = useState({
     name: "",
     game: "",
-    user: "",
+    username: "",
     Optic: [{ name: "" }],
     Muzzle: [{ name: "" }],
     Barrel: [{ name: "" }],
     Underbarrel: [{ name: "" }],
     Magazine: [{ name: "" }],
     Reargrip: [{ name: "" }],
-    // Stock: [{ name: "" }],
-    // Laser: [{ name: "" }],
-    // Firemods: [{ name: "" }],
+    Stock: [{ name: "" }],
+    Laser: [{ name: "" }],
   });
 
-  const [guns, setGuns] = useState<string[]>([]);
+  const [guns, setGuns] = useState<Gun[]>([]);
   const [attachments, setAttachments] = useState<Record<string, string[]>>({});
-  const [message, setMessage] = useState("");
 
   // Input style for all inputs
   const inputStyle =
@@ -45,7 +48,7 @@ export default function CreateLoadouts() {
     async function fetchData() {
       try {
         // Fetch guns
-        const gunRes = await fetch("/api/guns");
+        const gunRes = await fetch("/api/fetch/guns/noAttachments");
         const gunData = await gunRes.json();
         setGuns(gunData);
 
@@ -53,7 +56,7 @@ export default function CreateLoadouts() {
 
         // Fetch attachments per type
         for (const type of ATTACHMENT_TYPES) {
-          const res = await fetch(`/api/attachments?type=${type}`);
+          const res = await fetch(`/api/fetch/attachments?type=${type}`);
           const data = await res.json();
           attachmentData[type] = data;
         }
@@ -70,12 +73,24 @@ export default function CreateLoadouts() {
   // Handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setMessage("");
 
-    // Collect attachments in a type way
+    // Count filled attachments
+    let filledCount = 0;
+    ATTACHMENT_TYPES.forEach((type) => {
+      const attArray = form[type] as { name: string }[];
+      attArray.forEach((att) => {
+        if (att.name.trim() !== "") filledCount++;
+      });
+    });
+
+    // Require at least 5 attachments
+    if (filledCount < 5) {
+      toast.error("Please select at least 5 attachments.");
+      return;
+    }
+
+    // Collect attachments
     const formattedAttachments: { name: string; type: string }[] = [];
-
-    // Loop through each attachment type and collect non-empty attachments
     ATTACHMENT_TYPES.forEach((type) => {
       const attArray = form[type] as { name: string }[];
       attArray.forEach((att) => {
@@ -85,53 +100,52 @@ export default function CreateLoadouts() {
       });
     });
 
-    // Prepare payload with name, game, user and formatted attachments
+    // Prepare payload
     const payload = {
       name: form.name,
-      game: form.game,
-      user: form.user,
+      game: form.game, // fetched from selected gun
+      username: form.username,
       attachments: formattedAttachments,
     };
 
-    // Try fetching API to create loadout
     try {
-      const res = await fetch("/api/create", {
+      const res = await fetch("/api/create/loadout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      // If the response is ok, show success message and reset form otherwise show an error message
       if (res.ok) {
-        setMessage("Loadout created!");
-        // Reset form after successful submission
+        toast.success("Loadout created!");
         setForm({
           name: "",
           game: "",
-          user: "",
+          username: "",
           Optic: [{ name: "" }],
           Muzzle: [{ name: "" }],
           Barrel: [{ name: "" }],
           Underbarrel: [{ name: "" }],
           Magazine: [{ name: "" }],
           Reargrip: [{ name: "" }],
+          Stock: [{ name: "" }],
+          Laser: [{ name: "" }],
         });
       } else {
         const errData = await res.json();
-        setMessage("Error creating loadout: " + (errData.error || ""));
+        toast.error("Error creating loadout: " + (errData.error || ""));
       }
     } catch (err) {
       console.error(err);
-      setMessage("Error creating loadout.");
+      toast.error("Error creating loadout.");
     }
   }
 
   return (
     <main>
       <Navbar />
-      <div className="pt-25 flex justify-center flex-col items-center">
+      <div className="pt-25 pb-25 flex justify-center flex-col items-center">
         <h2 className="text-4xl mb-2 text-red-600 font-extrabold text-center">
-          Create an loadout
+          Create a Loadout
         </h2>
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg p-6 mt-4 rounded-lg w-2/4">
           <form onSubmit={handleSubmit}>
@@ -139,42 +153,33 @@ export default function CreateLoadouts() {
               {/* Gun select */}
               <select
                 value={form.name}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, name: e.target.value }))
-                }
+                onChange={(e) => {
+                  const selectedGun = guns.find(
+                    (g) => g.name === e.target.value,
+                  );
+                  setForm((f) => ({
+                    ...f,
+                    name: e.target.value,
+                    game: selectedGun ? selectedGun.game : "",
+                  }));
+                }}
                 className={inputStyle}
                 required
               >
-                <option value="">Select an gun</option>
-                {guns.map((gun: any) => (
+                <option value="">Select a gun</option>
+                {guns.map((gun) => (
                   <option key={gun.id} value={gun.name}>
-                    {gun.name}
+                    {gun.name} ({gun.game})
                   </option>
                 ))}
               </select>
 
-              {/* Game */}
-              <select
-                value={form.game}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, game: e.target.value }))
-                }
-                className={inputStyle}
-                required
-              >
-                <option value="">Select an game</option>
-                <option value="Black Ops 7">Black Ops 7</option>
-                <option value="Black Ops 6">Black Ops 6</option>
-                <option value="Modern Warfare 3">Modern Warfare 3</option>
-                <option value="Modern Warfare 2">Modern Warfare 2</option>
-              </select>
-
-              {/* User */}
+              {/* Username */}
               <input
                 placeholder="Username"
-                value={form.user}
+                value={form.username}
                 onChange={(e) =>
-                  setForm((f) => ({ ...f, user: e.target.value }))
+                  setForm((f) => ({ ...f, username: e.target.value }))
                 }
                 className={inputStyle}
                 required
@@ -210,7 +215,6 @@ export default function CreateLoadouts() {
                         })
                       }
                       className={`${inputStyle} mb-2`}
-                      required
                     >
                       <option value="">Select {type}</option>
                       {attachments[type]?.map((option: any) => (
@@ -227,12 +231,6 @@ export default function CreateLoadouts() {
             <Button variant="default" type="submit" className="w-full">
               Submit Loadout
             </Button>
-
-            {message && (
-              <div className="mt-3 text-white text-center font-medium">
-                {message}
-              </div>
-            )}
           </form>
         </div>
       </div>
