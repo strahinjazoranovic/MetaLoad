@@ -109,8 +109,8 @@ MetaLoad/
 a
 ## Important Links
 
-- **Repository**: [MetaLoad on GitHub](https://github.com/strahinjazoranovic/MetaLoad)
-<!-- - **Live Demo[Live Demo](https://github.com/strahinjazoranovic/MetaLoad)** -->
+- **[Repository](https://github.com/strahinjazoranovic/MetaLoad)**
+- **[Live demo](https://github.com/strahinjazoranovic/MetaLoad), coming soon** 
 
 ### Want more information about this project?
 
