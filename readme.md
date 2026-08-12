@@ -1,4 +1,4 @@
-<a href="/">
+<a href="https://github.com/strahinjazoranovic/MetaLoad">
  <img width="1024" alt="MetaLoad" src="public/images/landingPage.png">
 </a>
 
