@@ -39,8 +39,7 @@ This project is a Next.js application. Follow these steps to set it up locally:
     Create a `.env` file in the root directory and copy the fields provided in .env.example and configure your PostgreSQL connection details
 
 4.  **Database Setup:**
-    Ensure you have a PostgreSQL database set up. The application expects the following tables:
-    * At the moment I have no access to the up to date MetaLoad database, when I do this section will get updated
+    Ensure you have a PostgreSQL database set up and the necessary tables are found in database/database.sql(currently empty, will be updated soon with the correct database structure).
 
 5.  **Run the development server:**
     ```bash
@@ -106,7 +105,7 @@ MetaLoad/
 * `src/app/loadouts/` — Loadout browsing page.
 * `src/app/ui/` — Shared UI components and global styles.
 * `public/images/` — Static images used throughout the application.
-a
+
 ## Important Links
 
 - **[Repository](https://github.com/strahinjazoranovic/MetaLoad)**
