@@ -113,8 +113,8 @@ MetaLoad/
 - **[Repository](https://github.com/strahinjazoranovic/MetaLoad)**
 - **[Live demo](https://github.com/strahinjazoranovic/MetaLoad), coming soon** 
 
-### Want more information about this project?
+## Want more information about this project?
 
-Head to my [portfolio](https://portfolio-topaz-xi-84.vercel.app/projects/metaload) for more information about MetaLoad and its development process
+Head to my [portfolio](https://portfolio-topaz-xi-84.vercel.app/projects/metaload) for more information about MetaLoad and its development process.
 
 Developed by [strahinjazoranovic](https://github.com/strahinjazoranovic).
