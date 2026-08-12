@@ -1,5 +1,3 @@
-# MetaLoad
-
 ![MetaLoad landing page](/public/images/landingPage.png)
 
 MetaLoad is a loadout-sharing platform designed to make creating and sharing Call of Duty loadouts easier. Users can browse available loadouts or create their own loadouts.
