@@ -1,4 +1,6 @@
-![MetaLoad landing page](/public/images/landingPage.png)
+<a href="/">
+ <img width="1024" alt="MetaLoad" src="public/images/landingPage.png">
+</a>
 
 MetaLoad is a loadout-sharing platform designed to make creating and sharing Call of Duty loadouts easier. Users can browse available loadouts or create their own loadouts.
 
