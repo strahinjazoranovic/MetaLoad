@@ -108,8 +108,6 @@ MetaLoad/
 * `src/app/ui/` — Shared UI components and global styles.
 * `public/images/` — Static images used throughout the application.
 
-## Want more information about this project?
-
-Head to my [portfolio](https://portfolio-topaz-xi-84.vercel.app/projects/metaload) for more information about MetaLoad and its development process.
+## Developer
 
 Developed by [strahinjazoranovic](https://github.com/strahinjazoranovic).
